@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - 'feature/*'  # This will trigger the workflow for any feature branch
+  pull_request:
+    branches:
+      - 'develop'    # Trigger the workflow when PRs are opened to develop branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Adjust to match your project setup (e.g., python, node, java, etc.)
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Adjust to match your project dependencies (e.g., npm, pip, etc.)
+
+      - name: Run tests
+        run: |
+          python -m unittest discover  # Adjust to match your testing framework (e.g., pytest, jest, etc.)
